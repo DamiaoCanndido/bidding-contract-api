@@ -7,6 +7,17 @@ export class ContractService {
   constructor(private prisma: PrismaService) {}
 
   async create(createContractDto: CreateContractDto) {
+    const date = Date.now();
+    const today = new Date(date);
+    today.getFullYear();
+    const contractValidation = await this.prisma.contract.findMany({
+      where: {
+        year: today.getFullYear(),
+      },
+    });
+    if (contractValidation.length == 0) {
+      createContractDto.order = 1;
+    }
     const contract = await this.prisma.contract.create({
       data: createContractDto,
     });

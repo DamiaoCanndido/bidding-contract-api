@@ -16,4 +16,6 @@ model contract {
   updatedAt DateTime @updatedAt
   order     Int      @default(autoincrement())
   year      Int      @default(dbgenerated("date_part('year', now())"))
+
+  @@map("contracts")
 }
