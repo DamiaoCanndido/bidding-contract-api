@@ -14,8 +14,14 @@ model contract {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  order     Int      @default(autoincrement())
+  order     Int
   year      Int      @default(dbgenerated("date_part('year', now())"))
+  company   String
+  bidding   String
+  object    String
+  value     Float
+  deadline  String
+  isExpired Boolean  @default(false)
 
   @@map("contracts")
 }

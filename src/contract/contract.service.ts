@@ -9,14 +9,19 @@ export class ContractService {
   async create(createContractDto: CreateContractDto) {
     const date = Date.now();
     const today = new Date(date);
-    today.getFullYear();
-    const contractValidation = await this.prisma.contract.findMany({
+    const contractValidation = await this.prisma.contract.findFirst({
       where: {
         year: today.getFullYear(),
       },
+      orderBy: {
+        order: 'desc',
+      },
     });
-    if (contractValidation.length == 0) {
+
+    if (!contractValidation) {
       createContractDto.order = 1;
+    } else {
+      createContractDto.order = contractValidation.order + 1;
     }
     const contract = await this.prisma.contract.create({
       data: createContractDto,
@@ -24,8 +29,9 @@ export class ContractService {
     return contract;
   }
 
-  findAll() {
-    return `This action returns all contract`;
+  async findAll() {
+    const contracts = await this.prisma.contract.findMany();
+    return contracts;
   }
 
   findOne(id: number) {
