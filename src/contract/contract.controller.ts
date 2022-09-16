@@ -7,12 +7,15 @@ import {
   Param,
   Delete,
   UseFilters,
+  UseGuards,
 } from '@nestjs/common';
 import { AllExceptionsFilter } from '../helpers';
 import { ContractService } from './contract.service';
 import { CreateContractDto, UpdateContractDto } from './dto';
+import { AuthGuard } from './guard';
 
 @Controller('contract')
+@UseGuards(AuthGuard)
 @UseFilters(AllExceptionsFilter)
 export class ContractController {
   constructor(private readonly contractService: ContractService) {}

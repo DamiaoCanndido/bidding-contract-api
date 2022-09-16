@@ -22,6 +22,10 @@ export class CreateContractDto {
   @IsString()
   @IsNotEmpty()
   deadline: string;
+
+  @IsString()
+  @IsNotEmpty()
+  tokenId: string;
 }
 
 export class UpdateContractDto {}
